@@ -5,7 +5,13 @@
 /* font */
 
 * {
-	font-family: "Outfit", sans-serif;
-	background-color: whitesmoke;
-	scroll-behavior: smooth;
+  font-family: "Outfit", sans-serif;
+  background-color: whitesmoke;
+  scroll-behavior: smooth;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
