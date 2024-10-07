@@ -29,7 +29,7 @@ export const Forms = ({ submit }) => {
               >
                 Masukkan Tanggal Awal
               </label>
-              <div className="relative mt-1 rounded-lg  border border-neutral-400 py-1.5 sm:px-3 px-2  w-32 sm:w-full text-xs sm:text-base">
+              <div className="relative mt-1 rounded-lg  border border-neutral-400 py-1.5 sm:px-3 px-2  w-32 sm:w-full text-xs sm:text-base ">
                 <Controller
                   control={control}
                   name="tgl_awal"
@@ -77,9 +77,9 @@ export const Forms = ({ submit }) => {
               htmlFor="card"
               className="sm:block hidden text-md font-medium text-gray-800"
             >
-              Masukkan Nomor Kartumu
+              Masukkan Nomor Kartu
             </label>
-            <div className="relative mt-1 rounded-lg border border-neutral-400 py-2 text-xs sm:text-base w-full">
+            <div className="relative mt-1 rounded-lg border border-neutral-400 py-2 text-xs sm:text-base w-full focus:ring-5 ">
               <div className="pointer-events-none absolute inset-y-0 left-1 flex items-center pl-3">
                 <HiOutlineCreditCard
                   className="h-5 w-5 text-gray-400"
@@ -88,7 +88,7 @@ export const Forms = ({ submit }) => {
               </div>
               <input
                 type="number"
-                className="block w-full rounded-md border-gray-300 pl-10 sm:text-sm outline-none text-gray-700"
+                className="block w-full rounded-md border-gray-300 pl-10 sm:text-sm outline-none text-gray-700 "
                 placeholder="Nomor Kartu E-Toll"
                 id="card"
                 {...register("no_card", {

@@ -1,23 +1,22 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Card, Forms, Loading } from "../component";
+import React, { useEffect, useState } from "react";
+import { FormHistori, LoadHistori } from "../component";
 import axios from "axios";
 import moment from "moment";
 import { Format } from "../lib/format";
 import { ToastContainer, toast } from "react-toastify";
 import { usePDF } from "react-to-pdf";
+import { LIstHistori } from "../component/LIstHistori";
+import { Watermark } from "@hirohe/react-watermark";
+import { logo } from "../assets";
 import CountUp from "react-countup";
-export const Home = () => {
-  const refs = useRef({});
-  const { toPDF, targetRef } = usePDF({
-    filename: "struk.pdf",
-    ptions: { format: "A4" },
-  });
+export const History = () => {
+  const { toPDF, targetRef } = usePDF({ filename: "histori.pdf" });
   const [data, setData] = useState([]);
   const [count, setCount] = useState();
   const [load, setLOad] = useState(false);
   useEffect(() => {
     axios
-      .get(`https://struk.app-citrapersada.net/countStruk-get`)
+      .get(`https://struk.app-citrapersada.net/countHistori-get`)
       .then((res) => {
         const response = res.data.query;
         setCount(response);
@@ -29,10 +28,10 @@ export const Home = () => {
       });
   }, []);
   //query data
-  const submits = (data) => {
+  const Submits = (data) => {
     setLOad(true);
     axios
-      .post(`https://struk.app-citrapersada.net/getStruk`, data)
+      .post(`https://struk.app-citrapersada.net/getHistori`, data)
       .then((res) => {
         if (res.status === 200) {
           const response = res.data.query;
@@ -55,13 +54,9 @@ export const Home = () => {
       });
   };
 
-  const handleDownload = (id) => {
-    const element = refs.current[id];
-    if (element) {
-      targetRef.current = element;
-      toPDF();
-    }
-    axios.get(`https://struk.app-citrapersada.net/countStruk-create`);
+  const handleDownload = () => {
+    toPDF();
+    axios.get(`https://struk.app-citrapersada.net/countHistori-create`);
   };
   return (
     <div className="w-full h-auto relative">
@@ -79,7 +74,7 @@ export const Home = () => {
       />
       {load ? (
         <div className="flex justify-center mt-10">
-          <Loading />
+          <LoadHistori />
         </div>
       ) : (
         <div className="">
@@ -104,30 +99,55 @@ export const Home = () => {
                 </div>
               </div>
               <div className="text-center absolute inset-x-0 top-52 sm:top-56 z-20 w-11/12 mx-auto  rounded-lg bg-white">
-                <Forms submit={submits} />
+                <FormHistori submit={Submits} />
               </div>
             </div>
             {data && data.length ? (
-              <div className="w-11/12 mx-auto bg-slate-200 sm:py-10 py-5 rounded-2xl relative mt-40 flex flex-row justify-evenly flex-wrap items-center mb-20 h-screen overflow-auto gap-y-6 px-2">
-                {data &&
-                  data.map((e) => {
-                    return (
-                      <Card
-                        key={e.id}
-                        bank={e.bank}
-                        gerbang={e.gerbang}
-                        gol={e.golongan}
-                        no_card={e.no_kartu}
-                        ruas={e.ruas}
-                        saldo={Format(e.saldo)}
-                        sistem={e.sistem}
-                        tanggal={moment(e.tanggal).format("DD MM YYYY HH:mm")}
-                        tarif={Format(e.tarif)}
-                        refs={(el) => (refs.current[e.id] = el)}
-                        klik={() => handleDownload(e.id)}
-                      />
-                    );
-                  })}
+              <div className="w-11/12 mx-auto bg-slate-100 sm:py-10 py-5 rounded-2xl relative mt-40  gap-y-6 px-5">
+                <div className="" ref={targetRef}>
+                  <Watermark
+                    text="__PT Citra Persada Infrastruktur"
+                    textColor="red"
+                    textSize={"20"}
+                    wrapperStyle={{
+                      position: "relative",
+                      zIndex: 1,
+                    }}
+                  >
+                    <ul className="divide-y divide-gray-900 w-full px-10 border rounded-lg  bg-white mx-auto py-3 ">
+                      <div className="flex items-end justify-center my-8 ">
+                        <img
+                          src={logo}
+                          alt=""
+                          className="sm:w-8 w-5 sm:h-8 h-5"
+                        />
+                        <p className="font-bold sm:text-lg text-sm">
+                          PT Citra Persada Infrastruktur
+                        </p>
+                      </div>
+                      {data &&
+                        data.map((e) => {
+                          return (
+                            <LIstHistori
+                              card={e.no_kartu}
+                              gerbang={e.gerbang}
+                              waktu={moment(e.tanggal).format(
+                                "DD MM YYYY HH:mm"
+                              )}
+                              jumlah={Format(e.tarif)}
+                              key={e.id}
+                            />
+                          );
+                        })}
+                    </ul>
+                  </Watermark>
+                </div>
+                <button
+                  className=" bg-rose-500 text-white text-center  text-sm py-1  rounded hover:bg-rose-700 w-full mx-auto sm:mt-8 mt-5"
+                  onClick={handleDownload}
+                >
+                  Unduh
+                </button>
               </div>
             ) : null}
           </section>
@@ -155,7 +175,6 @@ export const Home = () => {
                       </dt>
                       <dd className="text-5xl font-semibold tracking-tight text-rose-600">
                         <CountUp end={count} separator="." />
-
                         <span className="text-base text-gray-600">Kali</span>
                       </dd>
                     </div>

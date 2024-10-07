@@ -4,7 +4,6 @@ import { logo } from "../assets";
 import { Watermark } from "@hirohe/react-watermark";
 export const Card = ({
   ruas,
-  free = "0-800- 1-777-879",
   gerbang,
   tanggal,
   gol,
@@ -17,12 +16,12 @@ export const Card = ({
   klik,
 }) => {
   return (
-    <div className="shadow-md w-96   py-5 rounded">
+    <div className="shadow-md w-96   py-5 rounded bg-white">
       <div ref={refs} className="border p-2 my-2">
         <Watermark
           text="__PT Citra Persada Infrastruktur"
           textColor="red"
-          textSize={"15"}
+          textSize={"18"}
           wrapperStyle={{
             position: "relative",
             zIndex: 1,
@@ -46,7 +45,7 @@ export const Card = ({
                 <div className="flex flex-col justify-evenly items-end bg-transparent">
                   <p className="bg-transparent">{ruas}</p>
                   <p className="text-sm text-sky-700 bg-transparent">
-                    Layanan Toll (Free Call) : {free}
+                    Layanan Toll (Free Call) : (021) - 6518350
                   </p>
                 </div>
               </div>
@@ -83,7 +82,7 @@ export const Card = ({
       </div>
       <div className="flex justify-center  " onClick={klik}>
         <button className=" bg-rose-500 text-white text-center  text-sm py-1 px-16 rounded hover:bg-rose-700">
-          Download
+          Unduh
         </button>
       </div>
     </div>

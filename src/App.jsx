@@ -1,10 +1,24 @@
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import { Home } from "./pages";
+import { History, Home, Tutorial } from "./pages";
+import { ButtonUP, Header, Kontak } from "./component";
+import { useEffect } from "react";
 
 function App() {
   return (
-    <div className="overflow-x-hidden">
-      <Home />
+    <div className=" relative bg-slate-50">
+      <div className="fixed z-50 top-0 bg-slate-100">
+        <Header />
+      </div>
+      <div className="relative top-16">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/history" element={<History />} />
+          <Route path="/tutorials" element={<Tutorial />} />
+        </Routes>
+        <ButtonUP />
+        <Kontak />
+      </div>
     </div>
   );
 }

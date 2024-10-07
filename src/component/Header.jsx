@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../assets/logos.png";
 import { HiOutlineBars3BottomRight, HiOutlineXMark } from "react-icons/hi2";
+import { Link } from "react-router-dom";
 
 //modul
 export const Header = () => {
@@ -8,23 +9,33 @@ export const Header = () => {
     {
       id: 1,
       nama: "Beranda",
-      href: "#beranda",
+      href: "/",
     },
-    // {
-    //   id: 2,
-    //   nama: "Cara Unduh",
-    //   href: "#unduh",
-    // },
+    {
+      id: 2,
+      nama: "Histori Struk",
+      href: "/history",
+    },
     {
       id: 3,
-      nama: "Kontak Kami",
-      href: "#kontak",
+      nama: "Cara Unduh",
+      href: "/tutorials",
     },
   ];
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState(1);
+  if (!sessionStorage.getItem("nav")) {
+    sessionStorage.setItem("nav", "1");
+  }
+
+  const nav = Number(sessionStorage.getItem("nav"));
+  const [active, setActive] = useState(Number.isInteger(nav) ? nav : 1);
+
+  useEffect(() => {
+    sessionStorage.setItem("nav", String(active));
+  }, [active]);
+
   return (
-    <div className=" w-screen bottom-full top-0 left-0 sticky z-50">
+    <div className=" w-screen bottom-full top-0 left-0 sticky z-50 ">
       <div className="md:flex items-center justify-between  py-4  mx-auto w-11/12 border-b-2 border-slate-200 ">
         <div
           className="font-bold cursor-pointer flex items-center  
@@ -36,18 +47,18 @@ export const Header = () => {
         <div>
           <ul
             className={`md:flex md:items-center md:pb-0 pb-12 absolute md:static md:z-auto z-[-1] left-0 w-full md:w-full md:pl-0 pl-4 transition-all duration-500 ease-in  ${
-              open ? "top-16" : "top-[-490px]"
+              open ? "top-16 bg-slate-100" : "top-[-490px]"
             }`}
           >
             {headers.map((e, idx) => {
               return (
                 <li
-                  className="md:mr-8 text-xl md:my-0 my-7 md:flex z-20"
+                  className="md:mr-8 text-xl md:my-0 my-7 md:flex z-20 "
                   onClick={() => setActive(e.id)}
                   key={idx}
                 >
-                  <a
-                    href={e.href}
+                  <Link
+                    to={e.href}
                     className={`${
                       active === e.id
                         ? "text-red-600 text-xl  duration-100 hover:border-b-2  hover:text-red-600 hover:font-semibold font-semibold border-b-2 border-red-600 "
@@ -55,7 +66,7 @@ export const Header = () => {
                     }`}
                   >
                     {e.nama}
-                  </a>
+                  </Link>
                 </li>
               );
             })}
