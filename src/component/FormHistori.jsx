@@ -73,7 +73,7 @@ export const FormHistori = ({ submit }) => {
               </span>
             )}
           </div>
-          <div className="mt-3  sm:mt-0 flex flex-row sm:justify-evenly justify-center items-center px-5 sm:py-2 py-1.5 bg-primary rounded-md w-full text-sm sm:text-base sm:w-72">
+          <div className="mt-3  sm:mt-0 flex flex-row sm:justify-evenly justify-center items-center px-5 sm:py-2 py-1.5 bg-primary rounded-md w-full text-sm sm:text-base sm:w-72 hover:bg-rose-700">
             <button
               className="ml-2 text-white font-semibold flex items-center gap-3
                       "
@@ -81,7 +81,7 @@ export const FormHistori = ({ submit }) => {
             >
               <span>
                 <HiOutlineMagnifyingGlass
-                  className="h-5 w-5 text-white bg-primary"
+                  className="h-5 w-5 text-white "
                   aria-hidden="true"
                 />
               </span>

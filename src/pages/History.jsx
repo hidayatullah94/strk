@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FormHistori, LoadHistori } from "../component";
-import axios from "axios";
 import moment from "moment";
-import { Format } from "../lib/format";
+import { baseURLS, Format } from "../lib/format";
 import { ToastContainer, toast } from "react-toastify";
 import { usePDF } from "react-to-pdf";
 import { LIstHistori } from "../component/LIstHistori";
@@ -15,8 +14,8 @@ export const History = () => {
   const [count, setCount] = useState();
   const [load, setLOad] = useState(false);
   useEffect(() => {
-    axios
-      .get(`https://struk.app-citrapersada.net/countHistori-get`)
+    baseURLS
+      .get(`/countHistori-get`)
       .then((res) => {
         const response = res.data.query;
         setCount(response);
@@ -30,8 +29,8 @@ export const History = () => {
   //query data
   const Submits = (data) => {
     setLOad(true);
-    axios
-      .post(`https://struk.app-citrapersada.net/getHistori`, data)
+    baseURLS
+      .post(`/getHistori`, data)
       .then((res) => {
         if (res.status === 200) {
           const response = res.data.query;
@@ -56,7 +55,7 @@ export const History = () => {
 
   const handleDownload = () => {
     toPDF();
-    axios.get(`https://struk.app-citrapersada.net/countHistori-create`);
+    baseURLS.get(`/countHistori-create`);
   };
   return (
     <div className="w-full h-auto relative">
@@ -90,10 +89,10 @@ export const History = () => {
                   </p>
                 </div>
                 <div className="absolute inset-x-0 top-24 flex flex-row flex-wrap justify-center bg-hero md:absolute md:inset-x-0 md:top-36 ">
-                  <p className="bg-white mx-2 my-2 px-4 py-1 rounded-lg">
+                  <p className="bg-white mx-2 my-2 px-4 py-1 rounded-lg hover:bg-primary hover:text-white duration-700 hover:-translate-x-2">
                     #KerenPakaiStrukDigital
                   </p>
-                  <p className="bg-white mx-2 my-2 px-4 py-1 rounded-lg">
+                  <p className="bg-white mx-2 my-2 px-4 py-1 rounded-lg hover:bg-primary hover:text-white duration-700 hover:translate-x-2">
                     #IndonesiaHijau
                   </p>
                 </div>
