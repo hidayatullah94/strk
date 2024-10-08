@@ -31,7 +31,7 @@ export const Card = ({
             <p className="text-xs font-extralight text-sky-600 ml-2  bg-transparent">
               Tanggal Cetak{" "}
               <span className="bg-transparent">
-                {moment(new Date()).format("DD MM YYYY HH:mm")}
+                {moment(new Date()).format("DD/MM/YYYY HH:mm")}
               </span>
             </p>
             <div className="px-4 py-5 sm:p-6 flex flex-col justify-evenly bg-transparent">

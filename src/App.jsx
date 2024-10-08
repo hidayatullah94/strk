@@ -2,11 +2,10 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import { History, Home, Tutorial } from "./pages";
 import { ButtonUP, Header, Kontak } from "./component";
-import { useEffect } from "react";
 
 function App() {
   return (
-    <div className=" relative bg-slate-50">
+    <div className=" relative bg-white">
       <div className="fixed z-50 top-0 bg-slate-100">
         <Header />
       </div>

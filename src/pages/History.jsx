@@ -132,7 +132,7 @@ export const History = () => {
                               card={e.no_kartu}
                               gerbang={e.gerbang}
                               waktu={moment(e.tanggal).format(
-                                "DD MM YYYY HH:mm"
+                                "DD-MM-YYYY HH:mm"
                               )}
                               jumlah={Format(e.tarif)}
                               key={e.id}
@@ -155,7 +155,7 @@ export const History = () => {
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
                 <h2 className="text-xl font-bold tracking-tight text-gray-700 sm:text-3xl">
-                  Syarat da ketentuan
+                  Syarat dan ketentuan
                 </h2>
                 <div className="mt-6 flex flex-col gap-x-8 sm:gap-y-20 gap-y-10 lg:flex-row">
                   <div className="lg:w-full lg:max-w-2xl lg:flex-auto">
