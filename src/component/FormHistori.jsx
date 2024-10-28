@@ -7,11 +7,22 @@ import {
 } from "react-icons/hi2";
 export const FormHistori = ({ submit }) => {
   const {
-    control,
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    shouldUnregister: false,
+    defaultValues: {
+      take:
+        sessionStorage.getItem("histori") === null
+          ? ""
+          : JSON.parse(sessionStorage.getItem("histori")).take,
+      no_card:
+        sessionStorage.getItem("histori") === null
+          ? ""
+          : JSON.parse(sessionStorage.getItem("histori")).no_card,
+    },
+  });
 
   return (
     <div className="w-full h-full sm:py-3 py-2 shadow-2xl rounded-lg ">

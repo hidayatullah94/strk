@@ -1,10 +1,16 @@
 import React from "react";
 import { histor } from "../assets";
 import { historiis, struks } from "../lib/tutor";
+import { Helmet } from "react-helmet";
 
 export const Tutorial = () => {
   return (
     <div className="bg-white py-10 sm:py-20">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Cara Unduh Struk </title>
+        <link rel="search" href="https://struk.citrapersada.net/tutorials" />
+      </Helmet>
       <div className="">
         <h1 className="sm:text-3xl text-xl font-bold text-rose-600 mx-auto max-w-7xl mb-5 sm:font-semibold text-center sm:text-start">
           Tata Cara Unduh Transaksi Struk

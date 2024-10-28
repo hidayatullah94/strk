@@ -80,11 +80,11 @@ export const Card = ({
           </div>
         </Watermark>
       </div>
-      <div className="flex justify-center  " onClick={klik}>
+      {/* <div className="flex justify-center  " onClick={klik}>
         <button className=" bg-rose-500 text-white text-center  text-sm py-1 px-16 rounded hover:bg-rose-700">
           Unduh
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };

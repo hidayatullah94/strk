@@ -5,6 +5,7 @@ import { baseURLS, Format } from "../lib/format";
 import { ToastContainer, toast } from "react-toastify";
 import { usePDF } from "react-to-pdf";
 import CountUp from "react-countup";
+import { Helmet } from "react-helmet";
 export const Home = () => {
   const refs = useRef({});
   const { toPDF, targetRef } = usePDF({
@@ -29,6 +30,7 @@ export const Home = () => {
   }, []);
   //query data
   const submits = (data) => {
+    sessionStorage.setItem("struk", JSON.stringify(data));
     setLOad(true);
     baseURLS
       .post(`/getStruk`, data)
@@ -36,9 +38,13 @@ export const Home = () => {
         if (res.status === 200) {
           const response = res.data.query;
           if (response.length) {
-            setData(response);
+            setTimeout(() => {
+              setData(response);
+            }, 1000);
           } else {
-            toast.info("Maaf data transaksi tidak ada");
+            setTimeout(() => {
+              toast.info("Maaf data transaksi tidak ada");
+            }, 1000);
           }
         }
       })
@@ -50,7 +56,9 @@ export const Home = () => {
         }
       })
       .finally(() => {
-        setLOad(false);
+        setTimeout(() => {
+          setLOad(false);
+        }, 1000);
       });
   };
 
@@ -60,6 +68,10 @@ export const Home = () => {
       targetRef.current = element;
       toPDF();
     }
+    baseURLS.get(`/countStruk-create`);
+  };
+  const handleCetak = () => {
+    toPDF();
     baseURLS.get(`/countStruk-create`);
   };
   return (
@@ -76,6 +88,12 @@ export const Home = () => {
         pauseOnHover
         theme="light"
       />
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Struk Citra Persada</title>
+        <link rel="search" href="https://struk.citrapersada.net/" />
+      </Helmet>
+
       {load ? (
         <div className="flex justify-center mt-10">
           <Loading />
@@ -107,26 +125,37 @@ export const Home = () => {
               </div>
             </div>
             {data && data.length ? (
-              <div className="w-11/12 mx-auto bg-slate-200 sm:py-10 py-5 rounded-2xl relative mt-40 flex flex-row justify-evenly flex-wrap items-center mb-20 h-screen overflow-auto gap-y-6 px-2">
-                {data &&
-                  data.map((e) => {
-                    return (
-                      <Card
-                        key={e.id}
-                        bank={e.bank}
-                        gerbang={e.gerbang}
-                        gol={e.golongan}
-                        no_card={e.no_kartu}
-                        ruas={e.ruas}
-                        saldo={Format(e.saldo)}
-                        sistem={e.sistem}
-                        tanggal={moment(e.tanggal).format("DD-MM-YYYY HH:mm")}
-                        tarif={Format(e.tarif)}
-                        refs={(el) => (refs.current[e.id] = el)}
-                        klik={() => handleDownload(e.id)}
-                      />
-                    );
-                  })}
+              <div className="w-11/12 mx-auto bg-slate-200  rounded-2xl relative mt-40">
+                <button
+                  className="sm:top-5 top-0 bg-rose-500 text-white text-center  sm:text-sm text-xs py-1.5 sm:px-16 px-8 rounded hover:bg-rose-700 absolute z-20  right-0 sm:right-5"
+                  onClick={handleCetak}
+                >
+                  Unduh
+                </button>
+                <div
+                  className=" sm:py-20 py-10 flex flex-row justify-center flex-wrap items-center mb-20 h-auto gap-6 sm:gap-10 px-2"
+                  ref={targetRef}
+                >
+                  {data &&
+                    data.map((e) => {
+                      return (
+                        <Card
+                          key={e.id}
+                          bank={e.bank}
+                          gerbang={e.gerbang}
+                          gol={e.golongan}
+                          no_card={e.no_kartu}
+                          ruas={e.ruas}
+                          saldo={Format(e.saldo)}
+                          sistem={e.sistem}
+                          tanggal={moment(e.tanggal).format("DD-MM-YYYY HH:mm")}
+                          tarif={Format(e.tarif)}
+                          refs={(el) => (refs.current[e.id] = el)}
+                          klik={() => handleDownload(e.id)}
+                        />
+                      );
+                    })}
+                </div>
               </div>
             ) : null}
           </section>

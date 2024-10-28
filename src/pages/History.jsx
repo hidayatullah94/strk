@@ -8,6 +8,7 @@ import { LIstHistori } from "../component/LIstHistori";
 import { Watermark } from "@hirohe/react-watermark";
 import { logo } from "../assets";
 import CountUp from "react-countup";
+import { Helmet } from "react-helmet";
 export const History = () => {
   const { toPDF, targetRef } = usePDF({ filename: "histori.pdf" });
   const [data, setData] = useState([]);
@@ -28,6 +29,7 @@ export const History = () => {
   }, []);
   //query data
   const Submits = (data) => {
+    sessionStorage.setItem("histori", JSON.stringify(data));
     setLOad(true);
     baseURLS
       .post(`/getHistori`, data)
@@ -35,7 +37,9 @@ export const History = () => {
         if (res.status === 200) {
           const response = res.data.query;
           if (response.length) {
-            setData(response);
+            setTimeout(() => {
+              setData(response);
+            }, 1000);
           } else {
             toast.info("Maaf data transaksi tidak ada");
           }
@@ -49,7 +53,9 @@ export const History = () => {
         }
       })
       .finally(() => {
-        setLOad(false);
+        setTimeout(() => {
+          setLOad(false);
+        }, 1000);
       });
   };
 
@@ -57,6 +63,7 @@ export const History = () => {
     toPDF();
     baseURLS.get(`/countHistori-create`);
   };
+
   return (
     <div className="w-full h-auto relative">
       <ToastContainer
@@ -71,6 +78,11 @@ export const History = () => {
         pauseOnHover
         theme="light"
       />
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Histori Struk </title>
+        <link rel="search" href="https://struk.citrapersada.net/history" />
+      </Helmet>
       {load ? (
         <div className="flex justify-center mt-10">
           <LoadHistori />

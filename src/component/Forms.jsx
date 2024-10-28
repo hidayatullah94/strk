@@ -12,7 +12,22 @@ export const Forms = ({ submit }) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      tgl_awal:
+        sessionStorage.getItem("struk") === null
+          ? new Date()
+          : new Date(JSON.parse(sessionStorage.getItem("struk")).tgl_awal),
+      tgl_akhir:
+        sessionStorage.getItem("struk") === null
+          ? new Date()
+          : new Date(JSON.parse(sessionStorage.getItem("struk")).tgl_akhir),
+      no_card:
+        sessionStorage.getItem("struk") === null
+          ? ""
+          : JSON.parse(sessionStorage.getItem("struk")).no_card,
+    },
+  });
 
   return (
     <div className="w-full h-full sm:py-3 py-2 shadow-2xl rounded-lg ">
