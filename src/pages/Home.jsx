@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Card, Forms, Loading } from "../component";
 import moment from "moment";
-import { baseURLS, Format } from "../lib/format";
+import { baseURLS, Format, formatCard } from "../lib/format";
 import { ToastContainer, toast } from "react-toastify";
 import { usePDF } from "react-to-pdf";
 import CountUp from "react-countup";
@@ -74,6 +74,7 @@ export const Home = () => {
     toPDF();
     baseURLS.get(`/countStruk-create`);
   };
+
   return (
     <div className="w-full h-auto relative">
       <ToastContainer
@@ -95,7 +96,7 @@ export const Home = () => {
       </Helmet>
 
       {load ? (
-        <div className="flex justify-center mt-10">
+        <div className="flex justify-center mt-10 min-h-screen">
           <Loading />
         </div>
       ) : (
@@ -141,13 +142,20 @@ export const Home = () => {
                       return (
                         <Card
                           key={e.id}
-                          bank={e.bank}
-                          gerbang={e.gerbang}
+                          bank={e.bank === "MDR" ? "MANDIRI" : e.bank}
+                          gerbang={
+                            e.gerbang === 4223 ? "KEBON BAWANG" : "PISANGAN"
+                          }
                           gol={e.golongan}
-                          no_card={e.no_kartu}
-                          ruas={e.ruas}
+                          no_card={formatCard(e.no_kartu)}
+                          ruas={
+                            e.ruas === 42
+                              ? "CMNP"
+                              : e.ruas === 11
+                              ? "CW"
+                              : "CMS"
+                          }
                           saldo={Format(e.saldo)}
-                          sistem={e.sistem}
                           tanggal={moment(e.tanggal).format("DD-MM-YYYY HH:mm")}
                           tarif={Format(e.tarif)}
                           refs={(el) => (refs.current[e.id] = el)}

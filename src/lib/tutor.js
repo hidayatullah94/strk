@@ -20,7 +20,7 @@ export const struks = [
   {
     name: "Klik Tombol Unduh",
     description:
-      "Akan muncul daftar struk sesuai dengan tanggal pencarian anda. Silahkan klik unduh pada struk yang ingin anda cetak.",
+      "Akan muncul daftar struk sesuai dengan tanggal pencarian anda. Silahkan klik unduh untuk mencetak struk.",
     src: und,
   },
 ];

@@ -7,7 +7,6 @@ export const Card = ({
   gerbang,
   tanggal,
   gol,
-  sistem,
   bank,
   no_card,
   tarif,
@@ -49,13 +48,17 @@ export const Card = ({
                   </p>
                 </div>
               </div>
-              <div className="mb-5 border-b-2 border-slate-300 bg-transparent">
+              <div className="mb-5 border-b-2 border-slate-300 bg-transparent text-xs sm:text-base">
                 <p className="bg-transparent">Gerbang Tol {gerbang}</p>
-                <p className="text-sm text-sky-700 bg-transparent">{tanggal}</p>
-                <p className="text-sm text-sky-700 bg-transparent">
-                  {gol}, {sistem}
-                </p>
-                <div className="divide-y-2 flex  border-t-2 border-slate-300 mt-3 gap-3 bg-transparent">
+                <div className="flex justify-between">
+                  <p className="text-sm text-sky-700 bg-transparent">
+                    {tanggal}
+                  </p>
+                  <p className="text-sm text-sky-700 bg-transparent">
+                    Golongan {gol}
+                  </p>
+                </div>
+                <div className="divide-y-2 flex  border-t-2 border-slate-300 mt-3 gap-3 bg-transparent text-sm sm:text-base">
                   <div className="x">
                     <p className="py-2 bg-transparent">Bank</p>
                     <p className="py-2 bg-transparent">Nomor Kartu</p>

@@ -10,12 +10,13 @@ export const FormHistori = ({ submit }) => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm({
     shouldUnregister: false,
     defaultValues: {
       take:
         sessionStorage.getItem("histori") === null
-          ? ""
+          ? 5
           : JSON.parse(sessionStorage.getItem("histori")).take,
       no_card:
         sessionStorage.getItem("histori") === null
@@ -23,7 +24,16 @@ export const FormHistori = ({ submit }) => {
           : JSON.parse(sessionStorage.getItem("histori")).no_card,
     },
   });
-
+  // Fungsi untuk memformat input sebagai 6032-9825-0026-0144
+  const formatWithDashes = (value) => {
+    return value.replace(/\D/g, "").replace(/(\d{4})(?=\d)/g, "$1-");
+  };
+  // Fungsi handle untuk menampilkan input berformat saat diketik
+  const handleInputChange = (e) => {
+    const rawValue = e.target.value;
+    const formattedValue = formatWithDashes(rawValue);
+    setValue("no_card", formattedValue, { shouldValidate: true });
+  };
   return (
     <div className="w-full h-full sm:py-3 py-2 shadow-2xl rounded-lg ">
       <h5 className="text-center font-semibold sm:text-lg sm:my-5 my-3 text-sm">
@@ -68,13 +78,14 @@ export const FormHistori = ({ submit }) => {
                 />
               </div>
               <input
-                type="number"
                 className="block w-full rounded-md border-gray-300 pl-10 sm:text-sm outline-none text-gray-700"
                 placeholder="Nomor Kartu E-Toll"
                 id="card"
                 {...register("no_card", {
                   required: true,
                 })}
+                maxLength={19}
+                onChange={handleInputChange}
               />
             </div>
             {errors.no_card && (

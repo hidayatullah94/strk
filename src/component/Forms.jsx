@@ -12,6 +12,7 @@ export const Forms = ({ submit }) => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm({
     defaultValues: {
       tgl_awal:
@@ -28,7 +29,16 @@ export const Forms = ({ submit }) => {
           : JSON.parse(sessionStorage.getItem("struk")).no_card,
     },
   });
-
+  // Fungsi untuk memformat input sebagai 6032-9825-0026-0144
+  const formatWithDashes = (value) => {
+    return value.replace(/\D/g, "").replace(/(\d{4})(?=\d)/g, "$1-");
+  };
+  // Fungsi handle untuk menampilkan input berformat saat diketik
+  const handleInputChange = (e) => {
+    const rawValue = e.target.value;
+    const formattedValue = formatWithDashes(rawValue);
+    setValue("no_card", formattedValue, { shouldValidate: true });
+  };
   return (
     <div className="w-full h-full sm:py-3 py-2 shadow-2xl rounded-lg ">
       <h5 className="text-center font-semibold sm:text-lg sm:my-5 my-3 text-sm">
@@ -102,13 +112,14 @@ export const Forms = ({ submit }) => {
                 />
               </div>
               <input
-                type="number"
                 className="block w-full rounded-md border-gray-300 pl-10 sm:text-sm outline-none text-gray-700 "
                 placeholder="Nomor Kartu E-Toll"
                 id="card"
                 {...register("no_card", {
                   required: true,
                 })}
+                onChange={handleInputChange}
+                maxLength={19}
               />
             </div>
             {errors.no_card && (

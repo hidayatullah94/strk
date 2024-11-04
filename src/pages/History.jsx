@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FormHistori, LoadHistori } from "../component";
 import moment from "moment";
-import { baseURLS, Format } from "../lib/format";
+import { baseURLS, Format, formatCard } from "../lib/format";
 import { ToastContainer, toast } from "react-toastify";
 import { usePDF } from "react-to-pdf";
 import { LIstHistori } from "../component/LIstHistori";
@@ -84,7 +84,7 @@ export const History = () => {
         <link rel="search" href="https://struk.citrapersada.net/history" />
       </Helmet>
       {load ? (
-        <div className="flex justify-center mt-10">
+        <div className="flex justify-center mt-10 min-h-screen">
           <LoadHistori />
         </div>
       ) : (
@@ -140,13 +140,23 @@ export const History = () => {
                         data.map((e) => {
                           return (
                             <LIstHistori
-                              card={e.no_kartu}
-                              gerbang={e.gerbang}
+                              card={formatCard(e.no_kartu)}
+                              gerbang={
+                                e.gerbang === 4223 ? "KEBON BAWANG" : "PISANGAN"
+                              }
                               waktu={moment(e.tanggal).format(
                                 "DD-MM-YYYY HH:mm"
                               )}
                               jumlah={Format(e.tarif)}
                               key={e.id}
+                              ruas={
+                                e.ruas === 42
+                                  ? "CMNP"
+                                  : e.ruas === 11
+                                  ? "CW"
+                                  : "CMS"
+                              }
+                              bank={e.bank === "MDR" ? "MANDIRI" : e.bank}
                             />
                           );
                         })}
